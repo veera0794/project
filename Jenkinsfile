@@ -7,9 +7,18 @@ pipeline {
         DEPLOY_PATH = '/var/www/app'                    // Deployment path
     }
     stages {
-        stage('Clone Repository') {
+        stage('Build Repository') {
             steps {
-                git 'https://github.com/veera0794/project.git'
+                script{
+                sh './build.sh'
+               }
+            }
+        }
+        stage('Deploy Repository') {
+            steps {
+                script{
+                sh './deploy.sh'
+               }
             }
         }
         stage('Build Docker Image') {
