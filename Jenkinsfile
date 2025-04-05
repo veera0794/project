@@ -7,10 +7,17 @@ pipeline {
         DEPLOY_PATH = '/var/www/app'                    // Deployment path
     }
     stages {
-        stage('Clone Repository') {
+        stage('Build Repository') {
             steps {
                 script{
                 sh './build.sh'
+               }
+            }
+        }
+        stage('Deploy Repository') {
+            steps {
+                script{
+                sh './deploy.sh'
                }
             }
         }
