@@ -15,8 +15,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def imageTag = env.BRANCH_NAME == 'master' ? 'prod' : 'dev'
+                    def imageTag = env.BRANCH_NAME == 'master' ? 'prod' : env.BRANCH_NAME
+                    echo "Building image with tag: ${imageTag}"
                     docker.build("your-app-image:${imageTag}")
+                    
                 }
             }
         }
