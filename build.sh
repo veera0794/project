@@ -1,3 +1,4 @@
+#!/bin/bash
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 echo "Current Branch: $BRANCH_NAME"
 
