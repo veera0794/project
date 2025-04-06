@@ -22,7 +22,7 @@ pipeline{
         sh'./buid.sh'
       }
     }
-    stage('Pull the pushed image and Deploy to EC2") {
+    stage('Pull the pushed image and Deploy to EC2') {
           steps{
             sh '''
             scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh ec2-user@13.218.164.137:/home/
