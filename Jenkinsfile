@@ -21,7 +21,7 @@ pipeline{
     stage('Build and Push Docker Image'){
       steps{
          sh'./build.sh'
-        sh'./deploy.sh'
+        
       }
     }
     stage('Pull the pushed image and Deploy to EC2') {
