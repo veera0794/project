@@ -2,6 +2,10 @@ pipeline{
   agent any
   environment {
     BRANCH_NAME = "${env.BRANCH_NAME}"
+    SSH_CREDENTIALS_ID = 'SSH-credential'       // SSH credentials for deployment
+        DEPLOY_SERVER = '3.84.157.233'          // Deployment server
+        DEPLOY_PATH = '/var/www/app'                    // Deployment path
+
 }
 
   stages{
