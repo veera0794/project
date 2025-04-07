@@ -2,7 +2,7 @@ pipeline{
   agent any
   environment {
     BRANCH_NAME = "${env.BRANCH_NAME}"
-    
+    DOCKER_CREDENTIALS_ID = 'docker-credentials-id'
         DEPLOY_SERVER = '3.85.159.148'          // Deployment server
         DEPLOY_PATH = '/var/www/app'                    // Deployment path
 
@@ -24,6 +24,7 @@ pipeline{
     }
     stage('Build and Push Docker Image'){
       steps{
+        withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')])
          sh'./build.sh'
         
       }
