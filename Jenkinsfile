@@ -33,12 +33,7 @@ pipeline{
       
                     
                     sh """
-                    ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER << 'EOF'
-                        cd $DEPLOY_PATH
-                        docker pull your-app-image:prod
-                        docker-compose down
-                        docker-compose up -d
-                    EOF
+                    scp -t -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh ec2-user@3.85.159.148:/home/
                     """
                 
 }
