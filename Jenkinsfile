@@ -27,12 +27,19 @@ pipeline{
     stage('Pull the pushed image and Deploy to EC2') {
           steps{
             sh '''
-            scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh ec2-user@13.218.164.137:/home/
-            ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem ec2-user@13.218.164.137 "BRANCH_NAME bash deploy.sh"
-            '''}
-          }
+                          sshagent([SSH_CREDENTIALS_ID]) {
+                    sh """
+                    ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER << 'EOF'
+                        cd $DEPLOY_PATH
+                        docker pull your-app-image:prod
+                        docker-compose down
+                        docker-compose up -d
+                    EOF
+                    """
+                }
+                }
+                
           }
           }
           
-          
-            
+
