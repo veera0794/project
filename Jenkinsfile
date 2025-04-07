@@ -16,6 +16,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    echo 'Listing files in the current directory:'
+            sh 'ls -l'  // This will display the files in the workspace
+            sh 'pwd'    // Shows the current directory
                     def imageTag = env.BRANCH_NAME == 'master' ? 'prod' : env.BRANCH_NAME
                     echo "Building image with tag: ${imageTag}"
                     docker.build("your-app-image:${imageTag}")
