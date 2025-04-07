@@ -2,7 +2,7 @@ pipeline{
   agent any
   environment {
     BRANCH_NAME = "${env.BRANCH_NAME}"
-    SSH_CREDENTIALS_ID = 'SSH-credential'       // SSH credentials for deployment
+    
         DEPLOY_SERVER = '3.85.159.148'          // Deployment server
         DEPLOY_PATH = '/var/www/app'                    // Deployment path
 
@@ -31,7 +31,7 @@ pipeline{
     stage('Pull the pushed image and Deploy to EC2') {
           steps{
       
-                          sshagent([SSH_CREDENTIALS_ID]) {
+                           {
                     sh """
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER << 'EOF'
                         cd $DEPLOY_PATH
