@@ -33,7 +33,7 @@ pipeline{
       
                     
                     sh """
-                    scp -t -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh "ec2-user@3.85.159.148:/home/ec2-user/"
+                    scp -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh -o StrictHostKeyChecking=no  ec2-user@3.85.159.148:/home/ec2-user/
                     """
                 
 }
