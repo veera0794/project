@@ -31,7 +31,7 @@ pipeline{
     stage('Pull the pushed image and Deploy to EC2') {
           steps{
       
-                           {
+                    
                     sh """
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER << 'EOF'
                         cd $DEPLOY_PATH
@@ -40,7 +40,7 @@ pipeline{
                         docker-compose up -d
                     EOF
                     """
-                }
+                
 }
           }
           }
