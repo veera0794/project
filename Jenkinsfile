@@ -26,7 +26,7 @@ pipeline{
     }
     stage('Pull the pushed image and Deploy to EC2') {
           steps{
-            sh '''
+      
                           sshagent([SSH_CREDENTIALS_ID]) {
                     sh """
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER << 'EOF'
@@ -37,9 +37,8 @@ pipeline{
                     EOF
                     """
                 }
-                }
-                
+}
           }
           }
+}
           
-
