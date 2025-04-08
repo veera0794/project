@@ -41,7 +41,7 @@ pipeline{
                     withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]){
                     sh """
                     echo "Deploying with $USER"
-                    scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh ec2-user@3.85.159.148:/home/ec2-user/
+                    scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh ec2-user@3.82.107.138:/home/ec2-user/
                     """
                     }               
 }
