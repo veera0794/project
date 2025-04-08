@@ -24,9 +24,10 @@ pipeline{
     }
     stage('Build and Push Docker Image'){
       steps{
-        
+         withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]){
          sh'./build.sh'
-        
+         }
+
       }
     }
     stage('Pull the pushed image and Deploy to EC2') {
