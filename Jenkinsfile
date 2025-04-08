@@ -24,9 +24,14 @@ pipeline{
     }
     stage('Build and Push Docker Image'){
       steps{
-         withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]){
-         sh'./build.sh'
-         }
+        withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+    sh '''
+        export DOCKER_USER=$DOCKER_USER
+        export DOCKER_PASS=$DOCKER_PASS
+        ./build.sh
+    '''
+}
+
 
       }
     }
