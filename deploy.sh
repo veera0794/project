@@ -19,7 +19,7 @@ if [ "$BRANCH_NAME" = "dev" ]; then
     echo "Starting development container..."
     docker run -d -p 80:80 --name my-reactapp-container prema07/dev-react-img:latest
 
-elif [ "$BRANCH_NAME" = "main" ]; then
+elif [ "$BRANCH_NAME" = "master" ]; then
     echo "Pulling production image..."
     docker pull prema07/prod-react-img:latest
     echo "Starting production container..."
