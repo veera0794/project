@@ -24,7 +24,7 @@ pipeline{
     }
     stage('Build and Push Docker Image'){
       steps{
-        withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')])
+        
          sh'./build.sh'
         
       }
@@ -32,11 +32,12 @@ pipeline{
     stage('Pull the pushed image and Deploy to EC2') {
           steps{
       
-                    
+                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]){
                     sh """
+                    echo "Deploying with $USER"
                     scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh ec2-user@3.85.159.148:/home/ec2-user/
                     """
-                
+                    }               
 }
           }
           }
