@@ -3,7 +3,7 @@ pipeline{
   environment {
     BRANCH_NAME = "${env.BRANCH_NAME}"
     DOCKER_CREDENTIALS_ID = 'docker-hub-credential'
-        DEPLOY_SERVER = '3.85.159.148'          // Deployment server
+        DEPLOY_SERVER = '3.82.107.138'          // Deployment server
         DEPLOY_PATH = '/var/www/app'                    // Deployment path
 
 }
