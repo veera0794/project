@@ -1,8 +1,12 @@
 #!/bin/bash
 
 #echo "Deployment Branch: $BRANCH_NAME"
-BRANCH_NAME=${BRANCH_NAME:-${GIT_BRANCH}}
-echo "Branch being used: $BRANCH_NAME"
+echo "Deployment Branch: $BRANCH_NAME"
+
+if [ -z "$BRANCH_NAME" ]; then
+    BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+    echo "Branch Name Detected: $BRANCH_NAME"
+fi
 
 # Stop and remove the container if it exists
 if [ $(docker ps -aq -f name=my-reactapp-container) ]; then
