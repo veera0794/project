@@ -42,6 +42,7 @@ pipeline{
                     sh """
                     echo "Deploying with $USER"
                     scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh ec2-user@3.82.107.138:/home/ec2-user/
+                    ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem ec2-user@3.82.107.138 'bash /home/ec2-user/deploy.sh'
                     """
                     }               
 }
