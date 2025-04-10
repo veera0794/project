@@ -3,7 +3,7 @@ pipeline{
   environment {
     BRANCH_NAME = "${env.BRANCH_NAME}"
     DOCKER_CREDENTIALS_ID = 'docker-hub-credential'
-        DEPLOY_SERVER = '3.82.107.138'          // Deployment server
+        DEPLOY_SERVER = '3.88.205.234'          // Deployment server
         DEPLOY_PATH = '/var/www/app'                    // Deployment path
 
 }
@@ -42,7 +42,7 @@ pipeline{
                     withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]){
                     sh """
                     echo "Deploying with $USER"
-                    scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh ec2-user@3.82.107.138:/home/ec2-user/
+                    scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh ec2-user@3.88.205.234:/home/ec2-user/
                     #ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem ec2-user@3.82.107.138 'bash /home/ec2-user/deploy.sh'
                     """
                     }               
