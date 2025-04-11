@@ -2,8 +2,8 @@ pipeline{
   agent any
   environment {
     BRANCH_NAME = "${env.BRANCH_NAME}"
-    SSH_CREDENTIALS_ID = 'SSH-credential'       // SSH credentials for deployment
-        DEPLOY_SERVER = '3.84.157.233'          // Deployment server
+    DOCKER_CREDENTIALS_ID = 'docker-hub-credential'
+        DEPLOY_SERVER = '3.88.205.234'          // Deployment server
         DEPLOY_PATH = '/var/www/app'                    // Deployment path
 
 }
@@ -24,23 +24,28 @@ pipeline{
     }
     stage('Build and Push Docker Image'){
       steps{
-         sh'./build.sh'
-        
+        withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+    sh '''
+        export DOCKER_USER=$DOCKER_USER
+        export DOCKER_PASS=$DOCKER_PASS
+        ./build.sh
+        ./deploy.sh
+    '''
+}
+
+
       }
     }
     stage('Pull the pushed image and Deploy to EC2') {
           steps{
       
-                          sshagent([SSH_CREDENTIALS_ID]) {
+                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]){
                     sh """
-                    ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER << 'EOF'
-                        cd $DEPLOY_PATH
-                        docker pull your-app-image:prod
-                        docker-compose down
-                        docker-compose up -d
-                    EOF
+                    echo "Deploying with $USER"
+                    scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem deploy.sh ec2-user@3.88.205.234:/home/ec2-user/
+                    #ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/grafana-key.pem ec2-user@3.82.107.138 'bash /home/ec2-user/deploy.sh'
                     """
-                }
+                    }               
 }
           }
           }
